@@ -23,9 +23,12 @@ end
 
 gem 'jquery-rails'
 
+group :development, :test do
+  gem 'rspec-rails', '~> 2.12.0'
+end
+
 group :test do
   gem 'factory_girl_rails', '~> 4.1.0'
-  gem 'rspec-rails', '~> 2.12.0'
   gem 'rspec-html-matchers', '~> 0.4.0'
 end
 
