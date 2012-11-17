@@ -1,0 +1,7 @@
+<% if @feeds.empty? %>
+  No feeds
+<% else %>
+  <% @feeds.each do |feed| %>
+  <li><%= feed.public_url %></li>
+  <% end %>
+<% end %>
