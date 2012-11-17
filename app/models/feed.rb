@@ -4,4 +4,5 @@ class Feed < ActiveRecord::Base
 
   attr_accessible :password, :public_url, :url, :username
 
+  validates_presence_of :url
 end
