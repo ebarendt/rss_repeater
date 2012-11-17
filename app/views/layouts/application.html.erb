@@ -22,7 +22,7 @@
       <a class="brand" href="#">RSS Repeater</a>
       <div class="nav-collapse">
         <ul class="nav">
-          <li><%= link_to "Log in", "http://www.google.com" %></li>
+          <li><%= link_to "Log in", new_user_session_path %></li>
           <!--<li><%#= link_to "Browse Products", products_path %></li>-->
         </ul>
       </div>
@@ -31,6 +31,13 @@
 </div>
 
 <div class="container">
+  <div class="row">
+    <div class="span12">
+      <% flash.each do |type, value| -%>
+        <p class="alert alert-<%= type %>"><%= value %></p>
+      <% end -%>
+    </div>
+  </div>
   <div class="row">
     <div class="span9"><%= yield %></div>
     <div class="span3">
