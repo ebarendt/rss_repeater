@@ -11,13 +11,17 @@ describe 'layouts/application' do
 
   describe 'when the user is logged in' do
     before(:each) do
-      user = FactoryGirl.create(:user)
-      sign_in user
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+      render
     end
 
     it 'has a log out link' do
-      render
       rendered.should have_tag('a', with: { href: destroy_user_session_path })
+    end
+
+    it "shows the user's email address" do
+      rendered.should have_tag('li', text: "Log out #{@user.email}")
     end
   end
 end
