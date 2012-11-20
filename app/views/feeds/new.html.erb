@@ -1,0 +1,7 @@
+<%= simple_form_for(@feed) do |form| %>
+  <%= form.error_notification %>
+  <%= form.input :url %>
+  <%= form.input :username %>
+  <%= form.input :password %>
+  <%= form.button :submit %>
+<% end %>

@@ -15,17 +15,48 @@ describe FeedsController do
       sign_in @user
     end
 
-    it "get 'index' assigns the user's feeds" do
-      feeds = FactoryGirl.create_list(:feed, 3, user: @user)
-      get :index
-      assigns(:feeds).should == feeds
+    describe "GET 'index'" do
+      it "assigns the user's feeds" do
+        feeds = FactoryGirl.create_list(:feed, 3, user: @user)
+        get :index
+        assigns(:feeds).should == feeds
+      end
+
+      it "doesn't include another user's feeds" do
+        another_user = FactoryGirl.create(:user)
+        feeds = FactoryGirl.create_list(:feed, 3, user: another_user)
+        get :index
+        assigns(:feeds).should be_empty
+      end
     end
 
-    it "the index doesn't include another user's feeds" do
-      another_user = FactoryGirl.create(:user)
-      feeds = FactoryGirl.create_list(:feed, 3, user: another_user)
-      get :index
-      assigns(:feeds).should be_empty
+    describe "GET 'new'" do
+      it "creates a new feed for the user" do
+        get :new
+        assigns(:feed).user.should == @user
+      end
+    end
+
+    describe "POST 'create'" do
+      before(:each) do
+        @feed_attrs = FactoryGirl.attributes_for(:feed)
+      end
+
+      it "creates a new feed" do
+        lambda do
+          post :create, feed: @feed_attrs
+        end.should change(Feed, :count).by(1)
+      end
+
+      it "has a success message" do
+        post :create, feed: @feed_attrs
+        flash[:notice].should == "Your feed was saved."
+      end
+
+      it "renders the 'new' template again if it's missing the URL" do
+        post :create, feed: @feed_attrs.merge(url: '')
+        response.should render_template('new')
+      end
     end
   end
 end

@@ -1,7 +1,23 @@
 <% if @feeds.empty? %>
   No feeds
 <% else %>
-  <% @feeds.each do |feed| %>
-  <li><%= feed.public_url %></li>
-  <% end %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>URL</th>
+        <th>Username</th>
+        <th></th>
+      </tr>
+    </thead>
+    <% @feeds.each do |feed| %>
+      <tr>
+        <td><%= feed.url %></td>
+        <td><%= feed.username %></td>
+        <td>
+          <%= link_to "Edit", edit_feed_path(feed), class: 'btn' %>
+          <%= link_to "Delete", feed_path(feed), method: :delete, class: 'btn btn-danger', confirm: 'Are you sure?' %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
